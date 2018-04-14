@@ -1,2 +1,0 @@
-# Pseudo-Cluster
-Personal project
