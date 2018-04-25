@@ -52,14 +52,4 @@ public class ServerTransferString {
 			clientSoc.close();
 		}
 	}
-	
-	public static void main(String args[]) {
-		ServerTransferString demo = new ServerTransferString();
-		try {
-			demo.getServer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

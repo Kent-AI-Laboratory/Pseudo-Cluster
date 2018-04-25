@@ -34,17 +34,4 @@ public class ClientTransferString {
 		writer.println(target);
 		System.out.println("Connection to Server Successful");
 	}
-	
-	public static void main(String args[]) {
-		try {
-			ClientTransferString demo = new ClientTransferString("Hello from the other side");
-			demo.sendString();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
