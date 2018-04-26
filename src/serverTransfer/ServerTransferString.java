@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerTransferString {
+public class ServerTransferString implements Runnable{
 	
 	// Define the fields necessary for TCP
 	private int port;
@@ -51,5 +51,15 @@ public class ServerTransferString {
 		if (clientSoc != null) {
 			clientSoc.close();
 		}
+	}
+
+	@Override
+	public void run() {
+		try {
+			getClientString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 }

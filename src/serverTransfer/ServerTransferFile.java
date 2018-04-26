@@ -62,15 +62,4 @@ public class ServerTransferFile implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String args[]) {
-		try {
-			ServerTransferFile demo = new ServerTransferFile("/home/aaronmao/Documents/something.sh");
-			Thread tdemo = new Thread(demo);
-			tdemo.start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
