@@ -1,13 +1,12 @@
 package serverTransfer;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.Callable;
 
 public class ServerTransferFile implements Runnable {
 	private String filePath;
@@ -17,12 +16,13 @@ public class ServerTransferFile implements Runnable {
 	private ServerSocket servSoc;
 	private File file;
 
-	public ServerTransferFile(String filePath, int port) {
+	public ServerTransferFile(String filePath, int port) throws IOException {
 		this.filePath = filePath;
 		this.port = port;
+		receiveFile();
 	}
 
-	public ServerTransferFile(String filePath) {
+	public ServerTransferFile(String filePath) throws IOException {
 		this(filePath, 5000);
 	}
 
@@ -33,16 +33,44 @@ public class ServerTransferFile implements Runnable {
 		int bytesRead;
 		int current = 0;
 		
+		System.out.println("Establishing socket");
+		boolean isConnected = false;
+		
 		while(true) {
 			Socket clientSoc = servSoc.accept();
+			if(!isConnected)
+				System.out.println("Client connected");
+			
 			InputStream inStream = clientSoc.getInputStream();
-			OutputStream 
+			OutputStream output = new FileOutputStream(filePath);
+			
+			byte[] byteArray = new byte[1024];
+			while((bytesRead = inStream.read(byteArray))!=-1) {
+				output.write(byteArray,0,bytesRead);
+			}
+			
+			output.close();
 		}
 	}
 
 	@Override
 	public void run() {
-		ServerTransferFile serverTrans = new ServerTransferFile("C:\\");
-		Thread tServerTrans = new Thread(serverTrans);
+		try {
+			receiveFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String args[]) {
+		try {
+			ServerTransferFile demo = new ServerTransferFile("/home/aaronmao/Documents/something.sh");
+			Thread tdemo = new Thread(demo);
+			tdemo.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
