@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerTransferString implements Runnable{
-	
+public class ServerTransferString implements Runnable {
+
 	// Define the fields necessary for TCP
 	private int port;
 	private Socket clientSoc;
@@ -16,10 +16,16 @@ public class ServerTransferString implements Runnable{
 	// Define string BufferedReader
 	BufferedReader reader;
 
+	// The file name received from the client
+	private String fileName;
+
+	// The session running file receive
+	private ServerTransferFile fileTrans;
+
 	public ServerTransferString(int port) {
 		this.port = port;
 	}
-	
+
 	public ServerTransferString() {
 		this(7000);
 	}
@@ -38,7 +44,8 @@ public class ServerTransferString implements Runnable{
 	public void getClientString() throws IOException {
 		try {
 			while (true) {
-				System.out.println("Client message: " + reader.readLine());
+				fileName = reader.readLine();
+				startFileReceive();
 				break;
 			}
 		} catch (Exception e) {
@@ -53,13 +60,27 @@ public class ServerTransferString implements Runnable{
 		}
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileTrans(ServerTransferFile fileTrans) {
+		this.fileTrans = fileTrans;
+	}
+
+	public void startFileReceive() {
+		fileTrans.setFileName(fileName);
+		fileTrans.run();
+	}
+
 	@Override
 	public void run() {
 		try {
+			getServer();
 			getClientString();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 	}
 }

@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerTransferFile implements Runnable {
+	private String fileName;
 	private String filePath;
 	private int port;
 
@@ -16,41 +17,51 @@ public class ServerTransferFile implements Runnable {
 	private ServerSocket servSoc;
 	private File file;
 
-	public ServerTransferFile(String filePath, int port) throws IOException {
+	public ServerTransferFile(String filePath, String fileName, int port) throws IOException {
 		this.filePath = filePath;
+		this.fileName = fileName;
 		this.port = port;
-		receiveFile();
 	}
 
-	public ServerTransferFile(String filePath) throws IOException {
-		this(filePath, 5000);
+	public ServerTransferFile() throws IOException {
+		this("/home/aaronmao/Documents/","", 5000);
 	}
 
 	public void receiveFile() throws IOException {
+		System.out.println(fileName);
 		servSoc = new ServerSocket(port);
-		file = new File(filePath);
+		file = new File(fileName);
 
 		int bytesRead;
 		int current = 0;
-		
+
 		System.out.println("Establishing socket");
 		boolean isConnected = false;
-		
-		while(true) {
+
+		while (true) {
 			Socket clientSoc = servSoc.accept();
-			if(!isConnected)
+			if (!isConnected)
 				System.out.println("Client connected");
-			
+
 			InputStream inStream = clientSoc.getInputStream();
-			OutputStream output = new FileOutputStream(filePath);
-			
+			OutputStream output = new FileOutputStream(filePath+fileName);
+
 			byte[] byteArray = new byte[1024];
-			while((bytesRead = inStream.read(byteArray))!=-1) {
-				output.write(byteArray,0,bytesRead);
+			while ((bytesRead = inStream.read(byteArray)) != -1) {
+				output.write(byteArray, 0, bytesRead);
 			}
-			
+			servSoc.close();
 			output.close();
+			break;
 		}
+	}
+	
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	@Override
