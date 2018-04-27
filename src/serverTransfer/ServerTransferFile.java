@@ -9,59 +9,58 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerTransferFile implements Runnable {
-	private String fileName;
-	private String filePath;
+	
+	//The field necessary for file storage
+	private String fileStorePath;
+	private File file;
+	
 	private int port;
-
 	private Socket clientSoc;
 	private ServerSocket servSoc;
-	private File file;
 
-	public ServerTransferFile(String filePath, String fileName, int port) throws IOException {
-		this.filePath = filePath;
-		this.fileName = fileName;
+	public ServerTransferFile(String fileStorePath, int port) throws IOException {
+		this.fileStorePath = fileStorePath;
 		this.port = port;
 	}
 
 	public ServerTransferFile() throws IOException {
-		this("/home/aaronmao/Documents/","", 5000);
+		this("", 5000);
 	}
 
 	public void receiveFile() throws IOException {
-		System.out.println(fileName);
+		//Defining the server socket
 		servSoc = new ServerSocket(port);
-		file = new File(fileName);
-
+		
+		//Defining the variable for reading the file
+		file = new File(fileStorePath);
 		int bytesRead;
-		int current = 0;
 
-		System.out.println("Establishing socket");
-		boolean isConnected = false;
+		System.out.println("ServerTransferFile: Establishing socket");
 
 		while (true) {
+			//Connecting to the client socket
 			Socket clientSoc = servSoc.accept();
-			if (!isConnected)
-				System.out.println("Client connected");
+			System.out.println("ServerTransferFile: Client connected");
 
+			//Defining the socket output (inputStream) and the file output (outputstream)
 			InputStream inStream = clientSoc.getInputStream();
-			OutputStream output = new FileOutputStream(filePath+fileName);
+			OutputStream output = new FileOutputStream(fileStorePath);
 
+			//Read the write the file to the fileStorePath
 			byte[] byteArray = new byte[1024];
 			while ((bytesRead = inStream.read(byteArray)) != -1) {
 				output.write(byteArray, 0, bytesRead);
 			}
+			
+			//Close serversocket and outputstream, break the loop
 			servSoc.close();
 			output.close();
 			break;
 		}
 	}
-	
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+
+	public void setfileStorePath(String fileStorePath) {
+		this.fileStorePath = fileStorePath;
 	}
 
 	@Override
@@ -69,7 +68,6 @@ public class ServerTransferFile implements Runnable {
 		try {
 			receiveFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

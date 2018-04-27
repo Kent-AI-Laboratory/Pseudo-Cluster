@@ -9,8 +9,8 @@ import java.net.UnknownHostException;
 public class ClientTransferString {
 	private Socket socket;
 	private static String target;
-	private static int port;
-	private static String ipaddr;
+	private static int servPort;
+	private static String servIpAddr;
 
 	private PrintWriter writer;
 
@@ -18,21 +18,27 @@ public class ClientTransferString {
 	}
 
 	public ClientTransferString(String target) throws UnknownHostException {
-		this(target, 7000);
+		this(target, InetAddress.getLocalHost().getHostAddress());
 	}
 
-	public ClientTransferString(String target, int port) throws UnknownHostException {
+	public ClientTransferString(String target, String servIpAddr) throws UnknownHostException {
+		this(target, 7000, servIpAddr);
+	}
+
+	public ClientTransferString(String target, int servPort, String servIpAddr) {
 		this.target = target;
-		this.port = port;
-		ipaddr = InetAddress.getLocalHost().getHostAddress();
+		this.servPort = servPort;
+		this.servIpAddr = servIpAddr;
 	}
 
 	public void sendString() throws UnknownHostException, IOException {
-		System.out.println("Attempting to connect to the server");
-		socket = new Socket(ipaddr, port);
+		// Connect the client to the server
+		System.out.println("Client: Attempting to connect to the server");
+		socket = new Socket(servIpAddr, servPort);
 
+		// Write the string to the socket
 		writer = new PrintWriter(socket.getOutputStream(), true);
 		writer.println(target);
-		System.out.println("Connection to Server Successful");
+		System.out.println("Client: Connection to Server Successful");
 	}
 }

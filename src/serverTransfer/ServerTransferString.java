@@ -16,9 +16,6 @@ public class ServerTransferString implements Runnable {
 	// Define string BufferedReader
 	BufferedReader reader;
 
-	// The file name received from the client
-	private String fileName;
-
 	// The session running file receive
 	private ServerTransferFile fileTrans;
 
@@ -30,9 +27,12 @@ public class ServerTransferString implements Runnable {
 		this(7000);
 	}
 
-	public void getServer() throws IOException {
+	public void startServer() throws IOException {
+		// Initialize and starting the new server socket
 		serverSoc = new ServerSocket(port);
-		System.out.println("Server connection successful");
+		System.out.println("ServerTransferString: Server connection successful");
+
+		// Keeping the string receive server constantly on
 		while (true) {
 			System.out.println("Waiting for client connection");
 			clientSoc = serverSoc.accept();
@@ -42,16 +42,15 @@ public class ServerTransferString implements Runnable {
 	}
 
 	public void getClientString() throws IOException {
+		//Transfer the file path to file receive module
 		try {
-			while (true) {
-				fileName = reader.readLine();
-				startFileReceive();
-				break;
-			}
+			startFileReceive(reader.readLine());
 		} catch (Exception e) {
-			System.out.println("Error in getClientString");
+			System.out.println("Error in getClientString()");
 			e.printStackTrace();
 		}
+		
+		//Check whether reader and soc are null
 		if (reader != null) {
 			reader.close();
 		}
@@ -60,23 +59,19 @@ public class ServerTransferString implements Runnable {
 		}
 	}
 
-	public String getFileName() {
-		return fileName;
-	}
-
 	public void setFileTrans(ServerTransferFile fileTrans) {
 		this.fileTrans = fileTrans;
 	}
 
-	public void startFileReceive() {
-		fileTrans.setFileName(fileName);
+	public void startFileReceive(String filePath) {
+		fileTrans.setfileStorePath(filePath);
 		fileTrans.run();
 	}
 
 	@Override
 	public void run() {
 		try {
-			getServer();
+			startServer();
 			getClientString();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

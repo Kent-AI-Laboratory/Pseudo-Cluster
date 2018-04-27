@@ -3,18 +3,16 @@ package serverTransfer;
 import java.io.IOException;
 
 public class ServerTransferCoordinator {
-	public static void main(String args[]) {
-		//ServerTransferFile servFile = new ServerTransferFile("/home/aaronmao/Documents");
-		try {
-			ServerTransferString servStringTrans = new ServerTransferString();
-			ServerTransferFile servFileTrans = new ServerTransferFile();
-			
-			servStringTrans.setFileTrans(servFileTrans);
-			Thread tServStringTrans = new Thread(servStringTrans);
-			tServStringTrans.start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void startReceiveServer() throws IOException {
+		//Initializing server for file and string transfer
+		ServerTransferString servStringTrans = new ServerTransferString();
+		ServerTransferFile servFileTrans = new ServerTransferFile();
+
+		//Set the invoke target for string transfer module
+		servStringTrans.setFileTrans(servFileTrans);
+		
+		//Start runnning the string transfer server as a thread
+		Thread tServStringTrans = new Thread(servStringTrans);
+		tServStringTrans.start();
 	}
 }

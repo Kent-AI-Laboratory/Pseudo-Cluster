@@ -10,40 +10,44 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ClientTransferFile {
-	private String serverIP;
-	private int serverPort;
+	private String servIpAddr;
+	private int servPort;
 	private String filePath;
 
 	private Socket socket;
 
-	public ClientTransferFile(String serverIP, int serverPort, String filePath) {
-		this.serverIP = serverIP;
-		this.serverPort = serverPort;
+	public ClientTransferFile(String servIpAddr, int servPort, String filePath) {
+		this.servIpAddr = servIpAddr;
+		this.servPort = servPort;
 		this.filePath = filePath;
+	}
+
+	public ClientTransferFile(String filePath, String servIpAddr) {
+		this(servIpAddr, 5000, filePath);
 	}
 
 	// ####Debug only
 	public ClientTransferFile(String filePath) throws UnknownHostException {
 		this(InetAddress.getLocalHost().getHostAddress(), 5000, filePath);
+		System.out.println("Usage of this constructor is not recommended");
 	}
 
 	public void sendFile() throws UnknownHostException, IOException {
-		socket = new Socket(serverIP, serverPort);
-
+		// Connect to server
+		socket = new Socket(servIpAddr, servPort);
 		System.out.println("Server connection established");
 
+		// Defining file and read file and write the file to socket
 		File file = new File(filePath);
 		byte[] byteArray = new byte[(int) file.length()];
-
 		FileInputStream fileInput = new FileInputStream(file);
 		BufferedInputStream bufferedIn = new BufferedInputStream(fileInput);
 		bufferedIn.read(byteArray, 0, byteArray.length);
-
 		OutputStream outStream = socket.getOutputStream();
 		outStream.write(byteArray, 0, byteArray.length);
-
 		System.out.println("File transfer finished");
 
+		// flush the stream and close the socket
 		outStream.flush();
 		socket.close();
 	}

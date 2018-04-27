@@ -4,27 +4,18 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 public class ClientTransferCoordinator {
-	public static void main(String args[]) {
-		try {
-			ClientTransferString clientStringTrans = new ClientTransferString("something.sh");
-			clientStringTrans.sendString();
-			
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			ClientTransferFile clientFileTrans = new ClientTransferFile("/home/aaronmao/Desktop/something.sh");
-			clientFileTrans.sendFile();
-			
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	// String: 7000, File 5000
+	public static void sendFileOnce(String filePath, String servIpAddr)
+			throws UnknownHostException, IOException, InterruptedException {
+		// Initialize string transfer module and send the string
+		ClientTransferString clientStringTrans = new ClientTransferString(filePath, servIpAddr);
+		clientStringTrans.sendString();
+
+		// Allow enough time for the invocation to happen on the server
+		Thread.sleep(3000);
+
+		// Initialize file transfer module and transfer the file
+		ClientTransferFile clientFileTrans = new ClientTransferFile(filePath, servIpAddr);
+		clientFileTrans.sendFile();
 	}
 }
