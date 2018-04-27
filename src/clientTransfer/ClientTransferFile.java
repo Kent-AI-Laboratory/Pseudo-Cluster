@@ -22,6 +22,7 @@ public class ClientTransferFile {
 		this.filePath = filePath;
 	}
 
+	// Reload constructor
 	public ClientTransferFile(String filePath, String servIpAddr) {
 		this(servIpAddr, 5000, filePath);
 	}

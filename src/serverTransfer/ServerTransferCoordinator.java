@@ -3,6 +3,7 @@ package serverTransfer;
 import java.io.IOException;
 
 public class ServerTransferCoordinator {
+	
 	public static void startReceiveServer() throws IOException {
 		//Initializing server for file and string transfer
 		ServerTransferString servStringTrans = new ServerTransferString();

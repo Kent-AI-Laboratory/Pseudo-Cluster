@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 
 public class ClientTransferCoordinator {
 	// String: 7000, File 5000
+	
 	public static void sendFileOnce(String filePath, String servIpAddr)
 			throws UnknownHostException, IOException, InterruptedException {
 		// Initialize string transfer module and send the string

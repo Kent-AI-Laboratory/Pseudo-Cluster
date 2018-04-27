@@ -14,9 +14,6 @@ public class ClientTransferString {
 
 	private PrintWriter writer;
 
-	public ClientTransferString() {
-	}
-
 	public ClientTransferString(String target) throws UnknownHostException {
 		this(target, InetAddress.getLocalHost().getHostAddress());
 	}
