@@ -19,15 +19,15 @@ public class ServerTransferString implements Runnable {
 	// The session running file receive
 	private ServerTransferFile fileTrans;
 
-	public ServerTransferString(int port) {
+	protected ServerTransferString(int port) {
 		this.port = port;
 	}
 
-	public ServerTransferString() {
+	protected ServerTransferString() {
 		this(7000);
 	}
 
-	public void startServer() throws IOException {
+	private void startServer() throws IOException {
 		// Initialize and starting the new server socket
 		serverSoc = new ServerSocket(port);
 		System.out.println("ServerTransferString: Server connection successful");
@@ -41,7 +41,7 @@ public class ServerTransferString implements Runnable {
 		}
 	}
 
-	public void getClientString() throws IOException {
+	private void getClientString() throws IOException {
 		//Transfer the file path to file receive module
 		try {
 			startFileReceive(reader.readLine());
@@ -58,14 +58,14 @@ public class ServerTransferString implements Runnable {
 			clientSoc.close();
 		}
 	}
-
-	public void setFileTrans(ServerTransferFile fileTrans) {
-		this.fileTrans = fileTrans;
-	}
-
-	public void startFileReceive(String fileName) {
+	
+	private void startFileReceive(String fileName) {
 		fileTrans.setFileName(fileName);
 		fileTrans.run();
+	}
+
+	protected void setFileTrans(ServerTransferFile fileTrans) {
+		this.fileTrans = fileTrans;
 	}
 
 	@Override

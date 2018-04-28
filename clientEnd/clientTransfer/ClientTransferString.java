@@ -14,21 +14,21 @@ public class ClientTransferString {
 
 	private PrintWriter writer;
 
-	public ClientTransferString(String target) throws UnknownHostException {
+	protected ClientTransferString(String target) throws UnknownHostException {
 		this(target, InetAddress.getLocalHost().getHostAddress());
 	}
 
-	public ClientTransferString(String target, String servIpAddr) throws UnknownHostException {
+	protected ClientTransferString(String target, String servIpAddr) throws UnknownHostException {
 		this(target, 7000, servIpAddr);
 	}
 
-	public ClientTransferString(String target, int servPort, String servIpAddr) {
+	protected ClientTransferString(String target, int servPort, String servIpAddr) {
 		this.target = target;
 		this.servPort = servPort;
 		this.servIpAddr = servIpAddr;
 	}
 
-	public void sendString() throws UnknownHostException, IOException {
+	protected void sendString() throws UnknownHostException, IOException {
 		// Connect the client to the server
 		System.out.println("Client: Attempting to connect to the server");
 		socket = new Socket(servIpAddr, servPort);
