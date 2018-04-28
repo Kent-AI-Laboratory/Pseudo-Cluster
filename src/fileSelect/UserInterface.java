@@ -7,6 +7,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,8 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+
+import clientTransfer.ClientTransferRepeater;
 
 public class UserInterface {
 
@@ -30,6 +34,8 @@ public class UserInterface {
 	private JLabel lblCount_Var;
 	private JLabel lblCount;
 
+	private String servIpAddr;
+
 	public UserInterface() {
 		initialize();
 	}
@@ -38,18 +44,19 @@ public class UserInterface {
 		lblCount_Var.setText(String.valueOf(model.getSize()));
 	}
 
-	public String[] submit() {
+	public void submit() throws UnknownHostException, IOException, InterruptedException {
 		File[] files = new File[model.getSize()];
-		String[] result = new String[model.getSize()];
-		for (int i = 0; i < result.length; i++) {
+
+		// The list that contains all the file path that is going to be submitted
+		List<String> filePathList = new ArrayList<String>();
+		for (int i = 0; i < files.length; i++) {
 			files[i] = (File) (model.getElementAt(i));
-			result[i] = files[i].getPath();
-			System.out.println(result[i]);
+			filePathList.add(files[i].getPath());
 		}
 
-		model.clear();
+		ClientTransferRepeater.sendFile(filePathList, servIpAddr);
 
-		return result;
+		model.clear();
 	}
 
 	private void initialize() {
@@ -81,7 +88,7 @@ public class UserInterface {
 
 		model = new DefaultListModel();
 		list = new JList(model);
-		list.setForeground(Color.GREEN);
+		list.setForeground(Color.BLACK);
 		list.setBackground(Color.WHITE);
 		list.setSelectionMode(2);
 		scroll = new JScrollPane(list);
@@ -114,7 +121,12 @@ public class UserInterface {
 		btnSubmit.setBounds(219, 214, 88, 30);
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				submit();
+				try {
+					submit();
+				} catch (IOException | InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				update();
 			}
 		});
@@ -135,8 +147,12 @@ public class UserInterface {
 		frame.getContentPane().add(lblCount_Var);
 		frame.setTitle("KHPC Submission");
 	}
-	
+
 	public JFrame getFrame() {
 		return this.frame;
-	} 
+	}
+
+	public void setServIpAddr(String servIpAddr) {
+		this.servIpAddr = servIpAddr;
+	}
 }
