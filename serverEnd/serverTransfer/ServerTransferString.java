@@ -63,8 +63,8 @@ public class ServerTransferString implements Runnable {
 		this.fileTrans = fileTrans;
 	}
 
-	public void startFileReceive(String filePath) {
-		fileTrans.setfileStorePath(filePath);
+	public void startFileReceive(String fileName) {
+		fileTrans.setFileName(fileName);
 		fileTrans.run();
 	}
 

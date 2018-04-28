@@ -51,7 +51,7 @@ public class UserInterface {
 		List<String> filePathList = new ArrayList<String>();
 		for (int i = 0; i < files.length; i++) {
 			files[i] = (File) (model.getElementAt(i));
-			filePathList.add(files[i].getPath());
+			filePathList.add(files[i].getName());
 		}
 
 		ClientTransferRepeater.sendFile(filePathList, servIpAddr);

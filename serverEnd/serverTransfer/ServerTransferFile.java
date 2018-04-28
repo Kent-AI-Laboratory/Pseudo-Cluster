@@ -12,6 +12,8 @@ public class ServerTransferFile implements Runnable {
 	
 	//The field necessary for file storage
 	private String fileStorePath;
+	private String fileName;
+	private String filePath;
 	private File file;
 	
 	private int port;
@@ -44,7 +46,7 @@ public class ServerTransferFile implements Runnable {
 
 			//Defining the socket output (inputStream) and the file output (outputstream)
 			InputStream inStream = clientSoc.getInputStream();
-			OutputStream output = new FileOutputStream(fileStorePath);
+			OutputStream output = new FileOutputStream(filePath);
 
 			//Read the write the file to the fileStorePath
 			byte[] byteArray = new byte[1024];
@@ -61,6 +63,10 @@ public class ServerTransferFile implements Runnable {
 
 	public void setfileStorePath(String fileStorePath) {
 		this.fileStorePath = fileStorePath;
+	}
+	
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Override
