@@ -1,6 +1,9 @@
+//Author: Yang Li'19
+
 package fileSelect;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,14 +12,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
-import javax.swing.JLabel;
-import java.awt.Font;
+import javax.swing.UnsupportedLookAndFeelException;
 
-
-public class FileSelect {
+public class UserInterface {
 
 	private JFrame frame;
 	private JList list;
@@ -27,66 +29,48 @@ public class FileSelect {
 	private JScrollPane scroll;
 	private JLabel lblCount_Var;
 	private JLabel lblCount;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-					FileSelect window = new FileSelect();
-					window.frame.setVisible(true);
-	}
 
-	/**
-	 * Create the application.
-	 */
-	public FileSelect() {
+	public UserInterface() {
 		initialize();
 	}
-	
-	/**
-	 * Return the list.
-	 */
 
 	public void update() {
 		lblCount_Var.setText(String.valueOf(model.getSize()));
 	}
-	
+
 	public String[] submit() {
 		File[] files = new File[model.getSize()];
 		String[] result = new String[model.getSize()];
-		for(int i = 0 ; i < result.length ; i++) {
-			files[i] = (File)(model.getElementAt(i));
+		for (int i = 0; i < result.length; i++) {
+			files[i] = (File) (model.getElementAt(i));
 			result[i] = files[i].getPath();
 			System.out.println(result[i]);
 		}
-		
-	model.clear();
-				
+
+		model.clear();
+
 		return result;
 	}
-	
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
+
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 430, 320);
+		frame.setBounds(100, 100, 416, 307);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		JFileChooser fc = new JFileChooser();
 		fc.setMultiSelectionEnabled(true);
-		
-		btnAdd = new JButton("Choose");
-		btnAdd.setForeground(Color.GREEN);
+
+		btnAdd = new JButton("Browse");
+		btnAdd.setForeground(Color.BLACK);
 		btnAdd.setBackground(Color.WHITE);
 		btnAdd.setBounds(23, 214, 88, 30);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int returnVal = fc.showOpenDialog(null);
-				if(returnVal == JFileChooser.APPROVE_OPTION) {
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					String current;
 					File[] selectedFiles = fc.getSelectedFiles();
-					for(File f : selectedFiles) {
+					for (File f : selectedFiles) {
 						current = f.getPath();
 						model.addElement(f);
 					}
@@ -94,37 +78,38 @@ public class FileSelect {
 				update();
 			}
 		});
-		
+
 		model = new DefaultListModel();
 		list = new JList(model);
 		list.setForeground(Color.GREEN);
-		list.setBackground(Color.RED);
+		list.setBackground(Color.WHITE);
 		list.setSelectionMode(2);
 		scroll = new JScrollPane(list);
-		scroll.setBounds(23,23,284,132);
+		scroll.setBounds(23, 23, 284, 160);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		
+
 		btnDelete = new JButton("Delete");
-		btnDelete.setForeground(Color.GREEN);
+		btnDelete.setForeground(Color.BLACK);
 		btnDelete.setBackground(Color.WHITE);
 		btnDelete.setBounds(121, 214, 88, 30);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int[] indices = list.getSelectedIndices();
 				int i = 0;
-				if(indices.length != 0) {
-					for(int current : indices) {
-						model.removeElementAt(current-i);
+				if (indices.length != 0) {
+					for (int current : indices) {
+						model.removeElementAt(current - i);
 						i++;
 					}
 				}
 				update();
 			}
 		});
-		
+
 		btnSubmit = new JButton("Submit");
-		btnSubmit.setForeground(Color.GREEN);
+		btnSubmit.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSubmit.setForeground(Color.BLACK);
 		btnSubmit.setBackground(Color.WHITE);
 		btnSubmit.setBounds(219, 214, 88, 30);
 		btnSubmit.addActionListener(new ActionListener() {
@@ -133,20 +118,25 @@ public class FileSelect {
 				update();
 			}
 		});
-		
+
 		lblCount = new JLabel("Count:");
-		lblCount.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblCount.setBounds(341, 105, 46, 14);
-		
+		lblCount.setFont(new Font("Calibri", Font.BOLD, 13));
+		lblCount.setBounds(317, 91, 46, 14);
+
 		lblCount_Var = new JLabel("0");
-		lblCount_Var.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		lblCount_Var.setBounds(341, 130, 46, 14);
-		
+		lblCount_Var.setFont(new Font("Calibri", Font.PLAIN, 13));
+		lblCount_Var.setBounds(327, 117, 34, 14);
+
 		frame.getContentPane().add(btnAdd);
 		frame.getContentPane().add(scroll);
 		frame.getContentPane().add(btnDelete);
 		frame.getContentPane().add(btnSubmit);
 		frame.getContentPane().add(lblCount);
 		frame.getContentPane().add(lblCount_Var);
+		frame.setTitle("KHPC Submission");
 	}
+	
+	public JFrame getFrame() {
+		return this.frame;
+	} 
 }
