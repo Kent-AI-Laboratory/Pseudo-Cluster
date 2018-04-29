@@ -4,6 +4,6 @@ jdk:
 
  - oraclejdk8
 
-after_success:
+script: ant builder
 
-  - bash <(curl -s https://codecov.io/bash)
+
