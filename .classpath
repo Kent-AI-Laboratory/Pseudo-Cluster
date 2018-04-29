@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="com.khpc.node"/>
-	<classpathentry kind="src" path="com.khpc.client"/>
-	<classpathentry kind="src" path="com.khpc.server"/>
-	<classpathentry kind="src" path="com.khpc.transfer"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/aaron/Downloads/oshi-core-3.5.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aaron/Downloads/jna-platform-4.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aaron/Downloads/jna-4.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aaron/Downloads/slf4j-1.7.25/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aaron/Downloads/slf4j-1.7.25/slf4j-ext-1.7.25.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aaron/Downloads/slf4j-1.7.25/slf4j-log4j12-1.7.25.jar"/>
+	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
