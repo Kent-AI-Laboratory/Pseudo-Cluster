@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'Pseudo-Cluster'
+rootProject.name = 'Pseudo-Cluster-Gradle'
