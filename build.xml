@@ -27,7 +27,7 @@
             </fileset>
         </copy>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="com.khpc.client">
+            <fileset dir="com.khpc.transfer">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
@@ -39,7 +39,7 @@
             </fileset>
         </copy>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="com.khpc.transfer">
+            <fileset dir="com.khpc.client">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
@@ -55,9 +55,9 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="com.khpc.node"/>
-            <src path="com.khpc.client"/>
-            <src path="com.khpc.server"/>
             <src path="com.khpc.transfer"/>
+            <src path="com.khpc.server"/>
+            <src path="com.khpc.client"/>
             <classpath refid="Pseudo-Cluster.classpath"/>
         </javac>
     </target>
@@ -96,4 +96,3 @@
         </java>
     </target>
 </project>
-
