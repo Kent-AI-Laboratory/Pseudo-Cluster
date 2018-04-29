@@ -12,22 +12,24 @@ public class ServerTransferFile implements Runnable {
 	
 	//The field necessary for file storage
 	private String fileStorePath;
+	private String fileName;
+	private String filePath;
 	private File file;
 	
 	private int port;
 	private Socket clientSoc;
 	private ServerSocket servSoc;
 
-	public ServerTransferFile(String fileStorePath, int port) throws IOException {
+	protected ServerTransferFile(String fileStorePath, int port) throws IOException {
 		this.fileStorePath = fileStorePath;
 		this.port = port;
 	}
 
-	public ServerTransferFile() throws IOException {
+	protected ServerTransferFile() throws IOException {
 		this("", 5000);
 	}
 
-	public void receiveFile() throws IOException {
+	private void receiveFile() throws IOException {
 		//Defining the server socket
 		servSoc = new ServerSocket(port);
 		
@@ -44,7 +46,7 @@ public class ServerTransferFile implements Runnable {
 
 			//Defining the socket output (inputStream) and the file output (outputstream)
 			InputStream inStream = clientSoc.getInputStream();
-			OutputStream output = new FileOutputStream(fileStorePath);
+			OutputStream output = new FileOutputStream(filePath);
 
 			//Read the write the file to the fileStorePath
 			byte[] byteArray = new byte[1024];
@@ -59,8 +61,12 @@ public class ServerTransferFile implements Runnable {
 		}
 	}
 
-	public void setfileStorePath(String fileStorePath) {
+	protected void setfileStorePath(String fileStorePath) {
 		this.fileStorePath = fileStorePath;
+	}
+	
+	protected void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Override

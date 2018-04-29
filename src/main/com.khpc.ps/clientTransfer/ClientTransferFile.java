@@ -16,24 +16,24 @@ public class ClientTransferFile {
 
 	private Socket socket;
 
-	public ClientTransferFile(String servIpAddr, int servPort, String filePath) {
+	protected ClientTransferFile(String servIpAddr, int servPort, String filePath) {
 		this.servIpAddr = servIpAddr;
 		this.servPort = servPort;
 		this.filePath = filePath;
 	}
 
 	// Reload constructor
-	public ClientTransferFile(String filePath, String servIpAddr) {
+	protected ClientTransferFile(String filePath, String servIpAddr) {
 		this(servIpAddr, 5000, filePath);
 	}
 
 	// ####Debug only
-	public ClientTransferFile(String filePath) throws UnknownHostException {
+	protected ClientTransferFile(String filePath) throws UnknownHostException {
 		this(InetAddress.getLocalHost().getHostAddress(), 5000, filePath);
 		System.out.println("Usage of this constructor is not recommended");
 	}
 
-	public void sendFile() throws UnknownHostException, IOException {
+	protected void sendFile() throws UnknownHostException, IOException {
 		// Connect to server
 		socket = new Socket(servIpAddr, servPort);
 		System.out.println("Server connection established");

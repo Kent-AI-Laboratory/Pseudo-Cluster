@@ -36,22 +36,22 @@ public class UserInterface {
 
 	private String servIpAddr;
 
-	public UserInterface() {
+	protected UserInterface() {
 		initialize();
 	}
 
-	public void update() {
+	private void update() {
 		lblCount_Var.setText(String.valueOf(model.getSize()));
 	}
 
-	public void submit() throws UnknownHostException, IOException, InterruptedException {
+	private void submit() throws UnknownHostException, IOException, InterruptedException {
 		File[] files = new File[model.getSize()];
 
 		// The list that contains all the file path that is going to be submitted
 		List<String> filePathList = new ArrayList<String>();
 		for (int i = 0; i < files.length; i++) {
 			files[i] = (File) (model.getElementAt(i));
-			filePathList.add(files[i].getPath());
+			filePathList.add(files[i].getName());
 		}
 
 		ClientTransferRepeater.sendFile(filePathList, servIpAddr);
@@ -148,11 +148,11 @@ public class UserInterface {
 		frame.setTitle("KHPC Submission");
 	}
 
-	public JFrame getFrame() {
+	protected JFrame getFrame() {
 		return this.frame;
 	}
 
-	public void setServIpAddr(String servIpAddr) {
+	protected void setServIpAddr(String servIpAddr) {
 		this.servIpAddr = servIpAddr;
 	}
 }

@@ -12,7 +12,10 @@ public class ServerTransferCoordinator {
 		//Set the invoke target for string transfer module
 		servStringTrans.setFileTrans(servFileTrans);
 		
-		//Start runnning the string transfer server as a thread
+		//Where the file will be stored, please change
+		servFileTrans.setfileStorePath("C:\\Users\\");
+		
+		//Start running the string transfer server as a thread
 		Thread tServStringTrans = new Thread(servStringTrans);
 		tServStringTrans.start();
 	}
