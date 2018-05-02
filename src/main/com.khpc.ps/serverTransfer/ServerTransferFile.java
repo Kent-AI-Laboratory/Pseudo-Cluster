@@ -46,7 +46,7 @@ public class ServerTransferFile implements Runnable {
 
 			//Defining the socket output (inputStream) and the file output (outputstream)
 			InputStream inStream = clientSoc.getInputStream();
-			OutputStream output = new FileOutputStream(filePath);
+			OutputStream output = new FileOutputStream(filePath+fileName);
 
 			//Read the write the file to the fileStorePath
 			byte[] byteArray = new byte[1024];
