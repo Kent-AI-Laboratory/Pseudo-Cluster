@@ -2,6 +2,7 @@ package clientTransfer;
 
 import java.io.IOException;
 
+//Only for testing
 public class Tester {
 	public static void main(String args[]) {
 		try {
