@@ -16,6 +16,6 @@ public class Initializer {
 		window.getFrame().setVisible(true);
 		
 		//####Need to change this address to the address of actual receiving server!!!!!#######
-		window.setServIpAddr("10.10.116.23");
+		window.setServIpAddr("127.0.0.1");
 	}
 }
