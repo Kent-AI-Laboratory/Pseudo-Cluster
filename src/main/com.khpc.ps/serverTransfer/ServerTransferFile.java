@@ -9,13 +9,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerTransferFile implements Runnable {
-	
-	//The field necessary for file storage
+
+	// The field necessary for file storage
 	private String fileStorePath;
 	private String fileName;
-	private String filePath;
-	private File file;
-	
+
 	private int port;
 	private Socket clientSoc;
 	private ServerSocket servSoc;
@@ -30,31 +28,30 @@ public class ServerTransferFile implements Runnable {
 	}
 
 	private void receiveFile() throws IOException {
-		//Defining the server socket
+		// Defining the server socket
 		servSoc = new ServerSocket(port);
-		
-		//Defining the variable for reading the file
-		file = new File(fileStorePath);
+
+		// Defining the variable for reading the file
 		int bytesRead;
 
 		System.out.println("ServerTransferFile: Establishing socket");
 
 		while (true) {
-			//Connecting to the client socket
+			// Connecting to the client socket
 			Socket clientSoc = servSoc.accept();
 			System.out.println("ServerTransferFile: Client connected");
 
-			//Defining the socket output (inputStream) and the file output (outputstream)
+			// Defining the socket output (inputStream) and the file output (outputstream)
 			InputStream inStream = clientSoc.getInputStream();
-			OutputStream output = new FileOutputStream(filePath+fileName);
+			OutputStream output = new FileOutputStream(fileStorePath + fileName);
 
-			//Read the write the file to the fileStorePath
+			// Read the write the file to the fileStorePath
 			byte[] byteArray = new byte[1024];
 			while ((bytesRead = inStream.read(byteArray)) != -1) {
 				output.write(byteArray, 0, bytesRead);
 			}
-			
-			//Close serversocket and outputstream, break the loop
+
+			// Close serversocket and outputstream, break the loop
 			servSoc.close();
 			output.close();
 			break;
@@ -64,7 +61,7 @@ public class ServerTransferFile implements Runnable {
 	protected void setfileStorePath(String fileStorePath) {
 		this.fileStorePath = fileStorePath;
 	}
-	
+
 	protected void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
