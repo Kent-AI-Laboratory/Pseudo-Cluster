@@ -1,5 +1,6 @@
 package clientTransfer;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -7,10 +8,10 @@ import java.util.List;
 public class ClientTransferRepeater {
 	
 	//Continuously send files
-	public static void sendFile(List<String> fileList, String servIpAddr)
+	public static void sendFile(List<File> fileList, String servIpAddr)
 			throws UnknownHostException, IOException, InterruptedException {
-		for (String filePath : fileList) {
-			ClientTransferCoordinator.sendFileOnce(filePath, servIpAddr);
+		for (File file : fileList) {
+			ClientTransferCoordinator.sendFileOnce(file, servIpAddr);
 		}
 	}
 }

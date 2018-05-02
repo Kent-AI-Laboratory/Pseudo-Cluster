@@ -4,6 +4,7 @@ package fileSelect;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -19,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import clientTransfer.ClientTransferRepeater;
 
@@ -36,7 +39,13 @@ public class UserInterface {
 
 	private String servIpAddr;
 
-	protected UserInterface() {
+	private int screenWidth;
+	private int screenHeight;
+	private int enlargeRatio;
+
+	public UserInterface() {
+		screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+		enlargeRatio = (int) ((double) screenWidth / (double) 1000);
 		initialize();
 	}
 
@@ -45,23 +54,21 @@ public class UserInterface {
 	}
 
 	private void submit() throws UnknownHostException, IOException, InterruptedException {
-		File[] files = new File[model.getSize()];
-
 		// The list that contains all the file path that is going to be submitted
-		List<String> filePathList = new ArrayList<String>();
-		for (int i = 0; i < files.length; i++) {
-			files[i] = (File) (model.getElementAt(i));
-			filePathList.add(files[i].getName());
+		List<File> fileList = new ArrayList<File>();
+
+		for (int i = 0; i < model.getSize(); i++) {
+			fileList.add((File) (model.getElementAt(i)));
 		}
-
-		ClientTransferRepeater.sendFile(filePathList, servIpAddr);
-
+		
+		ClientTransferRepeater.sendFile(fileList, servIpAddr);
 		model.clear();
 	}
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 416, 307);
+		frame.setBounds(300, 300, 416 * enlargeRatio, 307 * enlargeRatio);
+		frame.setSize(416 * enlargeRatio, 307 * enlargeRatio);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		JFileChooser fc = new JFileChooser();
@@ -70,7 +77,7 @@ public class UserInterface {
 		btnAdd = new JButton("Browse");
 		btnAdd.setForeground(Color.BLACK);
 		btnAdd.setBackground(Color.WHITE);
-		btnAdd.setBounds(23, 214, 88, 30);
+		btnAdd.setBounds(23 * enlargeRatio, 214 * enlargeRatio, 88 * enlargeRatio, 30 * enlargeRatio);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int returnVal = fc.showOpenDialog(null);
@@ -92,14 +99,14 @@ public class UserInterface {
 		list.setBackground(Color.WHITE);
 		list.setSelectionMode(2);
 		scroll = new JScrollPane(list);
-		scroll.setBounds(23, 23, 284, 160);
+		scroll.setBounds(23 * enlargeRatio, 23 * enlargeRatio, 284 * enlargeRatio, 160 * enlargeRatio);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		btnDelete = new JButton("Delete");
 		btnDelete.setForeground(Color.BLACK);
 		btnDelete.setBackground(Color.WHITE);
-		btnDelete.setBounds(121, 214, 88, 30);
+		btnDelete.setBounds(121 * enlargeRatio, 214 * enlargeRatio, 88 * enlargeRatio, 30 * enlargeRatio);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int[] indices = list.getSelectedIndices();
@@ -115,10 +122,9 @@ public class UserInterface {
 		});
 
 		btnSubmit = new JButton("Submit");
-		btnSubmit.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSubmit.setForeground(Color.BLACK);
 		btnSubmit.setBackground(Color.WHITE);
-		btnSubmit.setBounds(219, 214, 88, 30);
+		btnSubmit.setBounds(219 * enlargeRatio, 214 * enlargeRatio, 88 * enlargeRatio, 30 * enlargeRatio);
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -132,12 +138,10 @@ public class UserInterface {
 		});
 
 		lblCount = new JLabel("Count:");
-		lblCount.setFont(new Font("Calibri", Font.BOLD, 13));
-		lblCount.setBounds(317, 91, 46, 14);
+		lblCount.setBounds(317 * enlargeRatio, 91 * enlargeRatio, 46 * enlargeRatio, 14 * enlargeRatio);
 
 		lblCount_Var = new JLabel("0");
-		lblCount_Var.setFont(new Font("Calibri", Font.PLAIN, 13));
-		lblCount_Var.setBounds(327, 117, 34, 14);
+		lblCount_Var.setBounds(327 * enlargeRatio, 117 * enlargeRatio, 34 * enlargeRatio, 14 * enlargeRatio);
 
 		frame.getContentPane().add(btnAdd);
 		frame.getContentPane().add(scroll);
@@ -154,5 +158,21 @@ public class UserInterface {
 
 	protected void setServIpAddr(String servIpAddr) {
 		this.servIpAddr = servIpAddr;
+	}
+
+	public static void initiateInterface() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UserInterface window = new UserInterface();
+		window.getFrame().setVisible(true);
+
+		// ####Need to change this address to the address of actual receiving
+		// server!!!!!#######
+		window.setServIpAddr("127.0.0.1");
 	}
 }
