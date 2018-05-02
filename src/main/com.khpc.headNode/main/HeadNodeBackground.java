@@ -1,8 +1,10 @@
-package serverTransfer;
+package main;
 
 import java.io.IOException;
 
-public class Initializer {
+import serverTransfer.ServerTransferCoordinator;
+
+public class HeadNodeBackground {
 	public static void main(String args[]) {
 		try {
 			ServerTransferCoordinator.startReceiveServer();

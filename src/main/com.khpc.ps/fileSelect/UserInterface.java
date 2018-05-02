@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import clientTransfer.ClientTransferRepeater;
 
@@ -41,7 +43,7 @@ public class UserInterface {
 	private int screenHeight;
 	private int enlargeRatio;
 
-	protected UserInterface() {
+	public UserInterface() {
 		screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		enlargeRatio = (int) ((double) screenWidth / (double) 1000);
 		initialize();
@@ -52,17 +54,14 @@ public class UserInterface {
 	}
 
 	private void submit() throws UnknownHostException, IOException, InterruptedException {
-		File[] files = new File[model.getSize()];
-
 		// The list that contains all the file path that is going to be submitted
-		List<String> filePathList = new ArrayList<String>();
-		for (int i = 0; i < files.length; i++) {
-			files[i] = (File) (model.getElementAt(i));
-			filePathList.add(files[i].getName());
-		}
+		List<File> fileList = new ArrayList<File>();
 
-		ClientTransferRepeater.sendFile(filePathList, servIpAddr);
+		for (int i = 0; i < model.getSize(); i++) {
+			fileList.add((File) (model.getElementAt(i)));
+		}
 		
+		ClientTransferRepeater.sendFile(fileList, servIpAddr);
 		model.clear();
 	}
 
@@ -159,5 +158,21 @@ public class UserInterface {
 
 	protected void setServIpAddr(String servIpAddr) {
 		this.servIpAddr = servIpAddr;
+	}
+
+	public static void initiateInterface() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UserInterface window = new UserInterface();
+		window.getFrame().setVisible(true);
+
+		// ####Need to change this address to the address of actual receiving
+		// server!!!!!#######
+		window.setServIpAddr("127.0.0.1");
 	}
 }
