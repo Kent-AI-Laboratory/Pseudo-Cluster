@@ -16,6 +16,7 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 
  
@@ -32,6 +33,31 @@ public class RunFile {
 		this.opSystem=opSystem;
 	}
 	
+	public void deleteFile()
+	{
+		File file = new File(watchPath+fileName);     
+        if(file.delete())
+        {
+            System.out.println("File deleted successfully");
+        }
+        else
+        {
+            System.out.println("Failed to delete the file");
+        }
+	}
+	
+	public static void deleteFile(String filePath)
+	{
+		File file = new File(filePath);     
+        if(file.delete())
+        {
+            System.out.println("File deleted successfully");
+        }
+        else
+        {
+            System.out.println("Failed to delete the file");
+        }
+	}
 	
 	public void detectAndRun() {
 		// Sanity check - Check if watchPath is a folder
@@ -86,6 +112,7 @@ public class RunFile {
 				            p = Runtime.getRuntime().exec("matlab -r "+fileName);
 				            p.getErrorStream();  
 				            p.waitFor();
+				            return;
 				            
 				        } catch (Exception e) {
 				        	e.printStackTrace();  
@@ -110,6 +137,7 @@ public class RunFile {
 		
 	}
  
+	/* The following block is for testing purpose only
 	public static void main(String[] args) throws IOException,
 			InterruptedException {
 		// Folder we are going to watch
@@ -117,4 +145,5 @@ public class RunFile {
 		//Path folder = Paths.get("//home//alexanderliao//Documents//test");
 		a.detectAndRun();
 	}
+	*/
 }
