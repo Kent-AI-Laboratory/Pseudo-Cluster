@@ -1,13 +1,13 @@
-package serverTransfer;
+package receiveFile;
 
 import java.io.IOException;
 
-public class ServerTransferCoordinator {
+public class FileSendCoordinator {
 	
 	public static void startReceiveServer() throws IOException {
 		//Initializing server for file and string transfer
-		ServerTransferString servStringTrans = new ServerTransferString();
-		ServerTransferFile servFileTrans = new ServerTransferFile();
+		sendString servStringTrans = new sendString();
+		sendFile servFileTrans = new sendFile();
 
 		//Set the invoke target for string transfer module
 		servStringTrans.setFileTrans(servFileTrans);

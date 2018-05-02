@@ -2,15 +2,15 @@ package main;
 
 import java.io.IOException;
 
-import serverTransfer.ServerTransferCoordinator;
+import receiveFile.FileSendCoordinator;
 
-public class HeadNodeBackground {
+public class fileReceiveBackground {
 	public static void main(String args[]) {
 		try {
-			ServerTransferCoordinator.startReceiveServer();
+			FileSendCoordinator.startReceiveServer();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	} 
 }

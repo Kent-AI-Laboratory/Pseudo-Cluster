@@ -1,6 +1,6 @@
 //Author: Yang Li'19
 
-package fileSelect;
+package selectFile;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import clientTransfer.ClientTransferRepeater;
+import sendFile.FileReceiveCoordinator;
 
 public class UserInterface {
 
@@ -60,8 +60,12 @@ public class UserInterface {
 		for (int i = 0; i < model.getSize(); i++) {
 			fileList.add((File) (model.getElementAt(i)));
 		}
+
+		for (File file : fileList) {
+			FileReceiveCoordinator.sendFileOnce(file, servIpAddr);
+			model.removeElementAt(0);
+		}
 		
-		ClientTransferRepeater.sendFile(fileList, servIpAddr);
 		model.clear();
 	}
 
