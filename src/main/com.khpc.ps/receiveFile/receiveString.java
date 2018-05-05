@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class sendString implements Runnable {
+public class receiveString implements Runnable {
 
 	// Define the fields necessary for TCP
 	private int port;
@@ -17,13 +17,13 @@ public class sendString implements Runnable {
 	BufferedReader reader;
 
 	// The session running file receive
-	private sendFile fileTrans;
+	private receiveFile fileTrans;
 
-	protected sendString(int port) {
+	protected receiveString(int port) {
 		this.port = port;
 	}
 
-	protected sendString() {
+	protected receiveString() {
 		this(7000);
 	}
 
@@ -64,7 +64,7 @@ public class sendString implements Runnable {
 		fileTrans.run();
 	}
 
-	protected void setFileTrans(sendFile fileTrans) {
+	protected void setFileTrans(receiveFile fileTrans) {
 		this.fileTrans = fileTrans;
 	}
 

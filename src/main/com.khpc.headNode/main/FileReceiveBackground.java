@@ -2,11 +2,11 @@ package main;
 
 import java.io.IOException;
 
-import receiveFile.FileSendCoordinator;
+import receiveFile.FileReceiveCoordinator;
 
-public class fileReceiveBackground {
+public class FileReceiveBackground {
 	public static void startSend(String fileStorePath) {
-		FileSendCoordinator sendCor = new FileSendCoordinator();
+		FileReceiveCoordinator sendCor = new FileReceiveCoordinator();
 		sendCor.setFileStorePath(fileStorePath);
 		Thread sendCorSend = new Thread(sendCor);
 		sendCorSend.start();

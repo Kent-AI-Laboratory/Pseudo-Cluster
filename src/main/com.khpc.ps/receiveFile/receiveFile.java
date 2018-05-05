@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class sendFile implements Runnable {
+public class receiveFile implements Runnable {
 
 	// The field necessary for file storage
 	private String fileStorePath;
@@ -18,12 +18,12 @@ public class sendFile implements Runnable {
 	private Socket clientSoc;
 	private ServerSocket servSoc;
 
-	protected sendFile(String fileStorePath, int port) throws IOException {
+	protected receiveFile(String fileStorePath, int port) throws IOException {
 		this.fileStorePath = fileStorePath;
 		this.port = port;
 	}
 
-	protected sendFile() throws IOException {
+	protected receiveFile() throws IOException {
 		this("", 5000);
 	}
 

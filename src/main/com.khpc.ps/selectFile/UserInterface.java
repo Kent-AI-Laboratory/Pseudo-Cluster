@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import sendFile.FileReceiveCoordinator;
+import sendFile.FileSendCoordinator;
 
 public class UserInterface {
 
@@ -62,7 +62,7 @@ public class UserInterface {
 		}
 
 		for (File file : fileList) {
-			FileReceiveCoordinator.sendFileOnce(file, servIpAddr);
+			FileSendCoordinator.sendFileOnce(file, servIpAddr);
 			model.removeElementAt(0);
 		}
 		

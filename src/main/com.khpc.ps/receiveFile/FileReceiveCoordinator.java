@@ -2,14 +2,14 @@ package receiveFile;
 
 import java.io.IOException;
 
-public class FileSendCoordinator implements Runnable {
+public class FileReceiveCoordinator implements Runnable {
 	
 	private String fileStorePath;
 	
 	public void startReceiveServer () throws IOException {
 		//Initializing server for file and string transfer
-		sendString servStringTrans = new sendString();
-		sendFile servFileTrans = new sendFile();
+		receiveString servStringTrans = new receiveString();
+		receiveFile servFileTrans = new receiveFile();
 
 		//Set the invoke target for string transfer module
 		servStringTrans.setFileTrans(servFileTrans);

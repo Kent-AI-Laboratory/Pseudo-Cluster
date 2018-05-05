@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class receiveString {
+public class SendString {
 	private Socket socket;
 	private static String target;
 	private static int servPort;
@@ -14,15 +14,15 @@ public class receiveString {
 
 	private PrintWriter writer;
 
-	protected receiveString(String target) throws UnknownHostException {
+	protected SendString(String target) throws UnknownHostException {
 		this(target, InetAddress.getLocalHost().getHostAddress());
 	}
 
-	protected receiveString(String target, String servIpAddr) throws UnknownHostException {
+	protected SendString(String target, String servIpAddr) throws UnknownHostException {
 		this(target, 7000, servIpAddr);
 	}
 
-	protected receiveString(String target, int servPort, String servIpAddr) {
+	protected SendString(String target, int servPort, String servIpAddr) {
 		this.target = target;
 		this.servPort = servPort;
 		this.servIpAddr = servIpAddr;

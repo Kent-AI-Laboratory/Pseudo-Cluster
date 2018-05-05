@@ -9,26 +9,26 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class receiveFile {
+public class SendFile {
 	private String servIpAddr;
 	private int servPort;
 	private String filePath;
 
 	private Socket socket;
 
-	protected receiveFile(String servIpAddr, int servPort, String filePath) {
+	protected SendFile(String servIpAddr, int servPort, String filePath) {
 		this.servIpAddr = servIpAddr;
 		this.servPort = servPort;
 		this.filePath = filePath;
 	}
 
 	// Reload constructor
-	protected receiveFile(String filePath, String servIpAddr) {
+	protected SendFile(String filePath, String servIpAddr) {
 		this(servIpAddr, 5000, filePath);
 	}
 
 	// ####Debug only
-	protected receiveFile(String filePath) throws UnknownHostException {
+	protected SendFile(String filePath) throws UnknownHostException {
 		this(InetAddress.getLocalHost().getHostAddress(), 5000, filePath);
 		System.out.println("Usage of this constructor is not recommended");
 	}
