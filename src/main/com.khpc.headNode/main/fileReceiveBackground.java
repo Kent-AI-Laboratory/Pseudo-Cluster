@@ -5,12 +5,10 @@ import java.io.IOException;
 import receiveFile.FileSendCoordinator;
 
 public class fileReceiveBackground {
-	public static void main(String args[]) {
-		try {
-			FileSendCoordinator.startReceiveServer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	} 
+	public static void startSend(String fileStorePath) {
+		FileSendCoordinator sendCor = new FileSendCoordinator();
+		sendCor.setFileStorePath(fileStorePath);
+		Thread sendCorSend = new Thread(sendCor);
+		sendCorSend.start();
+	}
 }
