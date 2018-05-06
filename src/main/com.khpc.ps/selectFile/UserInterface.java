@@ -164,7 +164,7 @@ public class UserInterface {
 		this.servIpAddr = servIpAddr;
 	}
 
-	public static void initiateInterface() {
+	public static void initiateInterface(String servIpAddr) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -174,9 +174,6 @@ public class UserInterface {
 		}
 		UserInterface window = new UserInterface();
 		window.getFrame().setVisible(true);
-
-		// ####Need to change this address to the address of actual receiving
-		// server!!!!!#######
-		window.setServIpAddr("127.0.0.1");
+		window.setServIpAddr(servIpAddr);
 	}
 }

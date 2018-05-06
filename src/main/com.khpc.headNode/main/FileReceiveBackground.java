@@ -6,9 +6,9 @@ import receiveFile.FileReceiveCoordinator;
 
 public class FileReceiveBackground {
 	public static void startSend(String fileStorePath) {
-		FileReceiveCoordinator sendCor = new FileReceiveCoordinator();
-		sendCor.setFileStorePath(fileStorePath);
-		Thread sendCorSend = new Thread(sendCor);
+		FileReceiveCoordinator receiveCor = new FileReceiveCoordinator();
+		receiveCor.setFileStorePath(fileStorePath);
+		Thread sendCorSend = new Thread(receiveCor);
 		sendCorSend.start();
 	}
 }

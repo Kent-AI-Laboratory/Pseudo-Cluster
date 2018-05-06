@@ -1,30 +1,24 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
-public class NodeList {
-	private List<Node> nodeList;
-
-	public NodeList() {
-		nodeList = new ArrayList<Node>();
-	}
-
-	public void addNode(Node nodeIn) {
-		nodeList.add(nodeIn);
-	}
+public class NodeList extends ArrayList<Node> {
 
 	public boolean deleteNode(String servIpAddrorNodeName) {
-		for (Node node : nodeList) {
+		for (Node node : this) {
 			if (node.getServIpAddr() == servIpAddrorNodeName) {
-				nodeList.remove(node);
+				this.remove(node);
 				return true;
 			}
 		}
 
-		for (Node node : nodeList) {
+		for (Node node : this) {
 			if (node.getNodeName() == servIpAddrorNodeName) {
-				nodeList.remove(node);
+				this.remove(node);
 				return true;
 			}
 		}
@@ -32,13 +26,13 @@ public class NodeList {
 		return false;
 	}
 
-	public List<Node> getNodeList() {
-		return nodeList;
+	public NodeList getNodeList() {
+		return this;
 	}
 
-	public List<Node> filterUsage(List<Node> originList, String type, int usageLimit) {
+	public NodeList filterUsage(NodeList originList, String type, int usageLimit) {
 
-		ArrayList<Node> resultList = new ArrayList<Node>();
+		NodeList resultList = new NodeList();
 
 		if (type == "CPU" || type == "cpu") {
 			for (Node node : originList) {
@@ -55,19 +49,19 @@ public class NodeList {
 				}
 			}
 		}
-		
-		return resultList;
-	}
-
-	public List<Node> filterCpuRamUsage(List<Node> originList, int cpuUsageLimit, int ramUsageLimit) {
-		ArrayList<Node> resultList;
-		resultList = (ArrayList<Node>) filterUsage(nodeList, "CPU", cpuUsageLimit);
-		resultList = (ArrayList<Node>) filterUsage(resultList, "RAM", ramUsageLimit);
 
 		return resultList;
 	}
 
-	public Node getLeastNode(List<Node> originList, String type) {
+	public NodeList filterCpuRamUsage(NodeList originList, int cpuUsageLimit, int ramUsageLimit) {
+		NodeList resultList;
+		resultList = filterUsage(this, "CPU", cpuUsageLimit);
+		resultList = filterUsage(resultList, "RAM", ramUsageLimit);
+
+		return resultList;
+	}
+
+	public Node getLeastNode(NodeList originList, String type) {
 		int leastUsage = 100;
 		Node leastNode = null;
 
