@@ -32,6 +32,7 @@ public class ClientTransferString {
 		// Connect the client to the server
 		System.out.println("Client: Attempting to connect to the server");
 		socket = new Socket(servIpAddr, servPort);
+		socket.setSoTimeout(10000);
 
 		// Write the string to the socket
 		writer = new PrintWriter(socket.getOutputStream(), true);

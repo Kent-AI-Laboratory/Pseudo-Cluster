@@ -36,6 +36,7 @@ public class ClientTransferFile {
 	protected void sendFile() throws UnknownHostException, IOException {
 		// Connect to server
 		socket = new Socket(servIpAddr, servPort);
+		socket.setSoTimeout(10000);
 		System.out.println("Server connection established");
 
 		// Defining file and read file and write the file to socket

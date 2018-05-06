@@ -13,7 +13,7 @@ public class ServerTransferCoordinator {
 		servStringTrans.setFileTrans(servFileTrans);
 		
 		//Where the file will be stored, please change
-		servFileTrans.setfileStorePath("C:\\Users\\");
+		servFileTrans.setfileStorePath("/home/aaronmao/Documents/");
 		
 		//Start running the string transfer server as a thread
 		Thread tServStringTrans = new Thread(servStringTrans);
