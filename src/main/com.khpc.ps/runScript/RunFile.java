@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.watchPath;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchEvent.Kind;
@@ -15,35 +16,73 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 
  
 public class RunFile {
- 
-	public static void watchDirectoryPath(Path path) {
-		// Sanity check - Check if path is a folder
+	
+	private Path watchPath;
+	private String opSystem;
+	private String fileName;
+	
+	public RunFile(String path,String name,String opSystem)
+	{
+		watchPath = Paths.get(path);
+		fileName=name;
+		this.opSystem=opSystem;
+	}
+	
+	public void deleteFile()
+	{
+		File file = new File(watchPath+fileName);     
+        if(file.delete())
+        {
+            System.out.println("File deleted successfully");
+        }
+        else
+        {
+            System.out.println("Failed to delete the file");
+        }
+	}
+	
+	public static void deleteFile(String filePath)
+	{
+		File file = new File(filePath);     
+        if(file.delete())
+        {
+            System.out.println("File deleted successfully");
+        }
+        else
+        {
+            System.out.println("Failed to delete the file");
+        }
+	}
+	
+	public void detectAndRun() {
+		// Sanity check - Check if watchPath is a folder
 		try {
-			Boolean isFolder = (Boolean) Files.getAttribute(path,
+			Boolean isFolder = (Boolean) Files.getAttribute(watchPath,
 					"basic:isDirectory", NOFOLLOW_LINKS);
 			if (!isFolder) {
-				throw new IllegalArgumentException("Path: " + path + " is not a folder");
+				throw new IllegalArgumentException("Path: " + watchPath + " is not a folder");
 			}
 		} catch (IOException ioe) {
 			// Folder does not exists
 			ioe.printStackTrace();
 		}
 		
-		System.out.println("Watching path: " + path);
+		System.out.println("Watching watchPath: " + watchPath);
 		
-		// We obtain the file system of the Path
-		FileSystem fs = path.getFileSystem ();
+		// We obtain the file system of the watchPath
+		FileSystem fs = watchPath.getFileSystem ();
 		
 		// We create the new WatchService using the new try() block
 		try(WatchService service = fs.newWatchService()) {
 			
-			// We register the path to the service
+			// We register the watchPath to the service
 			// We watch for creation events
-			path.register(service, ENTRY_CREATE);
+			watchPath.register(service, ENTRY_CREATE);
 			
 			// Start the infinite polling loop
 			WatchKey key = null;
@@ -58,22 +97,22 @@ public class RunFile {
 					if (OVERFLOW == kind) {
 						continue; //loop
 					} else if (ENTRY_CREATE == kind) {
-						// A new Path was created 
+						// A new watchPath was created 
 						Path newPath = ((WatchEvent<Path>) watchEvent).context();
 						// Output
-						System.out.println("New path created: " + newPath);
+						System.out.println("New watchPath created: " + newPath);
 						
-						String s;
 				        Process p=null;
 				        try {
-				            p = Runtime.getRuntime().exec("sh -c 'cd ~/Documents/GitHub/Subspace-Learning/Classical-Algorithm && ProgToExecute'");
+				            p = Runtime.getRuntime().exec("sh -c 'cd "+ watchPath+"&& ProgToExecute'");
 				            //Documents/GitHub/Subspace-Learning/Classical-Algorithm
 				            p.getErrorStream();  
 				            p.waitFor();
 				            
-				            p = Runtime.getRuntime().exec("matlab -r bitTensor");
+				            p = Runtime.getRuntime().exec("matlab -r "+fileName);
 				            p.getErrorStream();  
 				            p.waitFor();
+				            return;
 				            
 				        } catch (Exception e) {
 				        	e.printStackTrace();  
@@ -98,10 +137,13 @@ public class RunFile {
 		
 	}
  
+	/* The following block is for testing purpose only
 	public static void main(String[] args) throws IOException,
 			InterruptedException {
 		// Folder we are going to watch
-		Path folder = Paths.get("//home//alexanderliao//Documents//test");
-		watchDirectoryPath(folder);
+		RunFile a = new RunFile("//Users//alexanderliao//Documents//test","testing.m","MacOS");
+		//Path folder = Paths.get("//home//alexanderliao//Documents//test");
+		a.detectAndRun();
 	}
+	*/
 }
