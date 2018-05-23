@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import sendFile.FileSendCoordinator;
 
 public class FileDistribution{
-	private NodeList nodeList;
+	private static NodeList nodeList;
 
 	public FileDistribution() {
 		nodeList = new NodeList();
 	}
 
-	public void distributeFile(File fileSend, int cpuUsage, int ramUsage) throws UnknownHostException, IOException, InterruptedException {
+	public static void distributeFile(File fileSend, int cpuUsage, int ramUsage) throws UnknownHostException, IOException, InterruptedException {
 		NodeList list = new NodeList();
 		Node selectedNode = new Node();
 

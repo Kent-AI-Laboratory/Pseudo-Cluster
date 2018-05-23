@@ -1,6 +1,5 @@
 package receiveFile;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +7,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class receiveFile implements Runnable {
+public abstract class ReceiveFile implements Runnable {
 
 	// The field necessary for file storage
 	private String fileStorePath;
@@ -18,16 +17,16 @@ public class receiveFile implements Runnable {
 	private Socket clientSoc;
 	private ServerSocket servSoc;
 
-	protected receiveFile(String fileStorePath, int port) throws IOException {
+	public ReceiveFile(String fileStorePath, int port) throws IOException {
 		this.fileStorePath = fileStorePath;
 		this.port = port;
 	}
 
-	protected receiveFile() throws IOException {
+	public ReceiveFile() throws IOException {
 		this("", 5000);
 	}
 
-	private void receiveFile() throws IOException {
+	private void receiveFile() throws IOException, InterruptedException {
 		// Defining the server socket
 		servSoc = new ServerSocket(port);
 
@@ -51,6 +50,8 @@ public class receiveFile implements Runnable {
 				output.write(byteArray, 0, bytesRead);
 			}
 
+			postReceiveOperation();
+
 			// Close serversocket and outputstream, break the loop
 			servSoc.close();
 			output.close();
@@ -58,12 +59,46 @@ public class receiveFile implements Runnable {
 		}
 	}
 
-	protected void setfileStorePath(String fileStorePath) {
+	public abstract void postReceiveOperation() throws IOException, InterruptedException;
+
+	public String getFileStorePath(){
+		return fileStorePath;
+	}
+
+	public void setfileStorePath(String fileStorePath) {
 		this.fileStorePath = fileStorePath;
 	}
 
-	protected void setFileName(String fileName) {
+	public String getFileName(){
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public int getPort(){
+		return port;
+	}
+
+	public void setPort(int port){
+		this.port = port;
+	}
+
+	public Socket getClientSoc(){
+		return clientSoc;
+	}
+
+	public void setClientSoc(Socket clientSoc){
+		this.clientSoc = clientSoc;
+	}
+
+	public ServerSocket getServSoc(){
+		return servSoc;
+	}
+
+	public void setServSoc(ServerSocket servSoc){
+		this.servSoc = servSoc;
 	}
 
 	@Override
@@ -71,6 +106,8 @@ public class receiveFile implements Runnable {
 		try {
 			receiveFile();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e){
 			e.printStackTrace();
 		}
 	}
