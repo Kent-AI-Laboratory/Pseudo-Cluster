@@ -8,8 +8,8 @@ public class FileReceiveCoordinator implements Runnable {
 	
 	public void startReceiveServer () throws IOException {
 		//Initializing server for file and string transfer
-		receiveString servStringTrans = new receiveString();
-		receiveFile servFileTrans = new receiveFile();
+		ReceiveString servStringTrans = new ReceiveString();
+		ReceiveFile servFileTrans = new ReceiveFile();
 
 		//Set the invoke target for string transfer module
 		servStringTrans.setFileTrans(servFileTrans);

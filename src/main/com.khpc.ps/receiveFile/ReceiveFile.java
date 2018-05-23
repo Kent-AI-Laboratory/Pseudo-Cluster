@@ -1,6 +1,5 @@
 package receiveFile;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +7,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class receiveFile implements Runnable {
+public class ReceiveFile implements Runnable {
 
 	// The field necessary for file storage
 	private String fileStorePath;
@@ -18,12 +17,12 @@ public class receiveFile implements Runnable {
 	private Socket clientSoc;
 	private ServerSocket servSoc;
 
-	protected receiveFile(String fileStorePath, int port) throws IOException {
+	protected ReceiveFile(String fileStorePath, int port) throws IOException {
 		this.fileStorePath = fileStorePath;
 		this.port = port;
 	}
 
-	protected receiveFile() throws IOException {
+	protected ReceiveFile() throws IOException {
 		this("", 5000);
 	}
 
