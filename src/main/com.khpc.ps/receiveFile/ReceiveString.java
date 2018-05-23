@@ -19,11 +19,11 @@ public class ReceiveString implements Runnable {
 	// The session running file receive
 	private ReceiveFile fileTrans;
 
-	protected ReceiveString(int port) {
+	public ReceiveString(int port) {
 		this.port = port;
 	}
 
-	protected ReceiveString() {
+	public ReceiveString() {
 		this(7000);
 	}
 
@@ -64,7 +64,7 @@ public class ReceiveString implements Runnable {
 		fileTrans.run();
 	}
 
-	protected void setFileTrans(ReceiveFile fileTrans) {
+	public void setFileTrans(ReceiveFile fileTrans) {
 		this.fileTrans = fileTrans;
 	}
 

@@ -17,12 +17,12 @@ public class ReceiveFile implements Runnable {
 	private Socket clientSoc;
 	private ServerSocket servSoc;
 
-	protected ReceiveFile(String fileStorePath, int port) throws IOException {
+	public ReceiveFile(String fileStorePath, int port) throws IOException {
 		this.fileStorePath = fileStorePath;
 		this.port = port;
 	}
 
-	protected ReceiveFile() throws IOException {
+	public ReceiveFile() throws IOException {
 		this("", 5000);
 	}
 
@@ -57,12 +57,44 @@ public class ReceiveFile implements Runnable {
 		}
 	}
 
-	protected void setfileStorePath(String fileStorePath) {
+	public String getFileStorePath(){
+		return fileStorePath;
+	}
+
+	public void setfileStorePath(String fileStorePath) {
 		this.fileStorePath = fileStorePath;
 	}
 
-	protected void setFileName(String fileName) {
+	public String getFileName(){
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public int getPort(){
+		return port;
+	}
+
+	public void setPort(int port){
+		this.port = port;
+	}
+
+	public Socket getClientSoc(){
+		return clientSoc;
+	}
+
+	public void setClientSoc(Socket clientSoc){
+		this.clientSoc = clientSoc;
+	}
+
+	public ServerSocket getServSoc(){
+		return servSoc;
+	}
+
+	public void setServSoc(ServerSocket servSoc){
+		this.servSoc = servSoc;
 	}
 
 	@Override

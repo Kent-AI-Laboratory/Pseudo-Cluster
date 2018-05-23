@@ -3,9 +3,9 @@ package receiveFile;
 import java.io.IOException;
 
 public class FileReceiveCoordinator implements Runnable {
-	
+
 	private String fileStorePath;
-	
+
 	public void startReceiveServer () throws IOException {
 		//Initializing server for file and string transfer
 		ReceiveString servStringTrans = new ReceiveString();
@@ -21,8 +21,12 @@ public class FileReceiveCoordinator implements Runnable {
 		Thread tServStringTrans = new Thread(servStringTrans);
 		tServStringTrans.start();
 	}
-	
-	public void setFileStorePath(String fileStorePath) {
+
+	public String getFileStorePath(){
+		return fileStorePath;
+	}
+
+	public void setFileStorePath(String fileStorePath){
 		this.fileStorePath = fileStorePath;
 	}
 

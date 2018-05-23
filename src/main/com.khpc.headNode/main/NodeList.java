@@ -85,4 +85,8 @@ public class NodeList extends ArrayList<Node> {
 
 		return leastNode;
 	}
+
+	public void scanAndAdd(){
+
+	}
 }

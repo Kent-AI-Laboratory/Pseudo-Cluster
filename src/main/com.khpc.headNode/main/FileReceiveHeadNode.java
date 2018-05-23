@@ -1,22 +1,19 @@
 package main;
 
 import receiveFile.ReceiveFile;
-import runScript.RunFile;
+import sendFile.FileSendCoordinator;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class FileReceiveNode extends ReceiveFile {
+public class FileReceiveHeadNode extends ReceiveFile {
 
-    public FileReceiveNode() throws IOException {
+    public FileReceiveHeadNode() throws IOException {
         super();
     }
 
-    private void receiveFile() throws IOException {
+    private void receiveFile() throws IOException, InterruptedException {
         // Defining the server socket
         setServSoc(new ServerSocket(getPort()));
 
@@ -40,8 +37,8 @@ public class FileReceiveNode extends ReceiveFile {
                 output.write(byteArray, 0, bytesRead);
             }
 
-            //Start the MatLab processing thread
-            startMatlab();
+            //Start the file distribution
+            startFileDistribution();
 
             // Close serversocket and outputstream, break the loop
             getServSoc().close();
@@ -50,8 +47,10 @@ public class FileReceiveNode extends ReceiveFile {
         }
     }
 
-    private void startMatlab(){
-        RunFile tempRun = new RunFile(getFileStorePath(), getFileName(), "");
-        tempRun.detectAndRun();
+    private void startFileDistribution() throws IOException, InterruptedException{
+        NodeList nodeLst = new NodeList();
+        nodeLst.scanAndAdd();
+
+        FileDistribution.distributeFile(new File(getFileStorePath()+getFileName()),50,50);
     }
 }
