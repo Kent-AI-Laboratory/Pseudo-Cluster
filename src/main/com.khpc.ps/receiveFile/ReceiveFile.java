@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ReceiveFile implements Runnable {
+public abstract class ReceiveFile implements Runnable {
 
 	// The field necessary for file storage
 	private String fileStorePath;
@@ -26,7 +26,7 @@ public class ReceiveFile implements Runnable {
 		this("", 5000);
 	}
 
-	private void receiveFile() throws IOException {
+	private void receiveFile() throws IOException, InterruptedException {
 		// Defining the server socket
 		servSoc = new ServerSocket(port);
 
@@ -50,12 +50,16 @@ public class ReceiveFile implements Runnable {
 				output.write(byteArray, 0, bytesRead);
 			}
 
+			postReceiveOperation();
+
 			// Close serversocket and outputstream, break the loop
 			servSoc.close();
 			output.close();
 			break;
 		}
 	}
+
+	public abstract void postReceiveOperation() throws IOException, InterruptedException;
 
 	public String getFileStorePath(){
 		return fileStorePath;
@@ -102,6 +106,8 @@ public class ReceiveFile implements Runnable {
 		try {
 			receiveFile();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e){
 			e.printStackTrace();
 		}
 	}
