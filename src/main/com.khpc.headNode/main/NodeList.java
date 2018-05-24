@@ -92,7 +92,7 @@ public class NodeList extends ArrayList<Node> {
 
             String tempAddress = "";
             for (int j = 0; j < addr.length; j++) {
-                if(i > 0){
+                if (i > 0) {
                     tempAddress += ".";
                 }
                 tempAddress += addr[i] & 0xFF;

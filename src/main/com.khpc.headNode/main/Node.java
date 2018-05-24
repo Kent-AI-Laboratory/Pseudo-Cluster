@@ -1,52 +1,52 @@
 package main;
 
 public class Node {
-	private int cpuPercentage;
-	private int ramPercentage;
-	private String servIpAddr;
-	private String nodeName;
+    private int cpuPercentage;
+    private int ramPercentage;
+    private String servIpAddr;
+    private String nodeName;
 
-	// Initialize cpu ran ram percentage load to 0
-	public Node(String servIpAddr, String nodeName) {
-		cpuPercentage = 0;
-		ramPercentage = 0;
-		this.servIpAddr = servIpAddr;
-		this.nodeName = nodeName;
-	}
+    // Initialize cpu ran ram percentage load to 0
+    public Node(String servIpAddr, String nodeName) {
+        cpuPercentage = 0;
+        ramPercentage = 0;
+        this.servIpAddr = servIpAddr;
+        this.nodeName = nodeName;
+    }
 
-	public Node() {
-		this("", "");
-	}
+    public Node() {
+        this("", "");
+    }
 
-	public void setCpuPercentage(int cpu) {
-		this.cpuPercentage = cpu;
-	}
+    public int getCpuPercentage() {
+        return cpuPercentage;
+    }
 
-	public void setRamPercentage(int ram) {
-		this.ramPercentage = ram;
-	}
+    public void setCpuPercentage(int cpu) {
+        this.cpuPercentage = cpu;
+    }
 
-	public void setServIpAddr(String servIpAddr) {
-		this.servIpAddr = servIpAddr;
-	}
-	
-	public void setNodeName(String nodeName) {
-		this.nodeName = nodeName;
-	}
+    public int getRamPercentage() {
+        return ramPercentage;
+    }
 
-	public int getCpuPercentage() {
-		return cpuPercentage;
-	}
+    public void setRamPercentage(int ram) {
+        this.ramPercentage = ram;
+    }
 
-	public int getRamPercentage() {
-		return ramPercentage;
-	}
+    public String getServIpAddr() {
+        return servIpAddr;
+    }
 
-	public String getServIpAddr() {
-		return servIpAddr;
-	}
-	
-	public String getNodeName() {
-		return nodeName;
-	}
+    public void setServIpAddr(String servIpAddr) {
+        this.servIpAddr = servIpAddr;
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
 }

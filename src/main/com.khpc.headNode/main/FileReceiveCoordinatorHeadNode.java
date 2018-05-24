@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class FileReceiveCoordinatorHeadNode extends FileReceiveCoordinator {
 
-    public void startReceiveServer () throws IOException {
+    public void startReceiveServer() throws IOException {
         //Initializing server for file and string transfer
         ReceiveString servStringTrans = new ReceiveString();
         ReceiveFile servFileTrans = new FileReceiveHeadNode();

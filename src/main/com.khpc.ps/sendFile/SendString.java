@@ -7,36 +7,35 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class SendString {
-	private Socket socket;
-	private static String target;
-	private static int servPort;
-	private static String servIpAddr;
+    private static String target;
+    private static int servPort;
+    private static String servIpAddr;
+    private Socket socket;
+    private PrintWriter writer;
 
-	private PrintWriter writer;
+    protected SendString(String target) throws UnknownHostException {
+        this(target, InetAddress.getLocalHost().getHostAddress());
+    }
 
-	protected SendString(String target) throws UnknownHostException {
-		this(target, InetAddress.getLocalHost().getHostAddress());
-	}
+    protected SendString(String target, String servIpAddr) throws UnknownHostException {
+        this(target, 7000, servIpAddr);
+    }
 
-	protected SendString(String target, String servIpAddr) throws UnknownHostException {
-		this(target, 7000, servIpAddr);
-	}
+    protected SendString(String target, int servPort, String servIpAddr) {
+        this.target = target;
+        this.servPort = servPort;
+        this.servIpAddr = servIpAddr;
+    }
 
-	protected SendString(String target, int servPort, String servIpAddr) {
-		this.target = target;
-		this.servPort = servPort;
-		this.servIpAddr = servIpAddr;
-	}
+    protected void sendString() throws UnknownHostException, IOException {
+        // Connect the client to the server
+        System.out.println("Client: Attempting to connect to the server");
+        socket = new Socket(servIpAddr, servPort);
+        socket.setSoTimeout(10000);
 
-	protected void sendString() throws UnknownHostException, IOException {
-		// Connect the client to the server
-		System.out.println("Client: Attempting to connect to the server");
-		socket = new Socket(servIpAddr, servPort);
-		socket.setSoTimeout(10000);
-
-		// Write the string to the socket
-		writer = new PrintWriter(socket.getOutputStream(), true);
-		writer.println(target);
-		System.out.println("Client: Connection to Server Successful");
-	}
+        // Write the string to the socket
+        writer = new PrintWriter(socket.getOutputStream(), true);
+        writer.println(target);
+        System.out.println("Client: Connection to Server Successful");
+    }
 }
