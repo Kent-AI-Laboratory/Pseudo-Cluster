@@ -8,3 +8,8 @@ Master: ![Build Status](https://www.travis-ci.org/Kent-AI-Laboratory/Pseudo-Clus
 
 ## Limits
   1. Only usable for individual executable file that has no logical connections with each other
+  2. Currently only usable for excuting MatLab scripts
+  3. Only usable when there is a computer in the Pre-E center that has a CPU/RAM utilization that's lower than 50%
+ 
+ ## How To Install
+  1. YOU CAN'T INSTALL RIGHT NOW, LOL LOL LOL
